@@ -7,12 +7,20 @@ const DiaryEditor = () => {
   const [state, setState] = useState({
     author: "",
     content: "",
+    emotion: 1,
   });
   const handleChangeState = (e) => {
     setState({
       ...state,
-      [e.target.name]: e.targt.value,
+      [e.target.name]: e.target.value,
+      //  e.target.name을 대괄호로 감싸는 이유 ->
+      //   객체 리터럴을 이용해 객체를 만들 때 변수에 담긴 문자열을 key로 활용하려면 대괄호에 담아 사용해야 함.
     });
+  };
+
+  const handleSumbit = () => {
+    console.log(state);
+    alert("저장 성공 ");
   };
   return (
     <div className="DiaryEditor">
@@ -36,6 +44,24 @@ const DiaryEditor = () => {
           value={state.content}
           onChange={handleChangeState}
         />
+      </div>
+      <div>
+        {/* 감정점수 표현 */}
+        오늘의 감정점수 :
+        <select
+          name="emotion"
+          value={state.emotion}
+          onChange={handleChangeState}
+        >
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+        </select>
+      </div>
+      <div>
+        <button onClick={handleSumbit}>일기 저장하기</button>
       </div>
     </div>
   );
