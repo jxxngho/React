@@ -8,36 +8,33 @@ const DiaryEditor = () => {
     author: "",
     content: "",
   });
-
+  const handleChangeState = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.targt.value,
+    });
+  };
   return (
     <div className="DiaryEditor">
       <h2> 오늘의 일기</h2>
       <div>
         <input
+          name="author"
           value={state.author}
-          onChange={(e) => {
-            setState({
-              ...state, // 배열 펼쳐주는것, 원래의 값을 할당
-              author: e.target.value,
-            });
-            // onChange 이벤트 -> 여기선 사람이 input 태그에 입력하는 것
-            // 값이 바뀌었을 때 수행하는 이벤트
-            // input의 값이 바뀌었을때 onChange에 전달한
-            // callback 함수를 수행한다.
+          onChange={handleChangeState}
+          // onChange 이벤트 -> 여기선 사람이 input 태그에 입력하는 것
+          // 값이 바뀌었을 때 수행하는 이벤트
+          // input의 값이 바뀌었을때 onChange에 전달한
+          // callback 함수를 수행한다.
 
-            // e.target.value --> author가 변화해야하는 값
-          }}
+          // e.target.value --> author가 변화해야하는 값
         />
       </div>
       <div>
         <textarea
+          name="content"
           value={state.content}
-          onChange={(e) => {
-            setState({
-              ...state, // 항상 먼저 해줘야함.
-              cotent: e.target.content,
-            });
-          }}
+          onChange={handleChangeState}
         />
       </div>
     </div>
