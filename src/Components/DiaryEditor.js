@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const DiaryEditor = () => {
+  const authorInput = useRef();
+  const contentInput = useRef();
+  // useRef   -> html 요소 접근할 수 있게 해줌
+
   // 다이어리 에디터 컴포넌트가 인풋에 작성된 값을
   // 직접 핸들링할 수 있도록 만들어야함.
   // -->state 이용
@@ -19,7 +23,17 @@ const DiaryEditor = () => {
   };
 
   const handleSumbit = () => {
-    console.log(state);
+    if (state.author.length < 1) {
+      authorInput.current.focus();
+      // 현재 가리키는 값을 current라는 프로퍼티로 불러와서 사용가능
+      return;
+    }
+
+    if (state.content.length < 1) {
+      contentInput.current.focus();
+      return;
+    }
+
     alert("저장 성공 ");
   };
   return (
@@ -27,6 +41,7 @@ const DiaryEditor = () => {
       <h2> 오늘의 일기</h2>
       <div>
         <input
+          ref={authorInput}
           name="author"
           value={state.author}
           onChange={handleChangeState}
@@ -40,6 +55,7 @@ const DiaryEditor = () => {
       </div>
       <div>
         <textarea
+          ref={contentInput}
           name="content"
           value={state.content}
           onChange={handleChangeState}
