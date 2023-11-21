@@ -27,6 +27,7 @@ const DiaryItem = ({
   const handleEdit = () => {
     if (localContent.length < 5) {
       localContentInput.current.focus();
+
       return;
     }
     if (window.confirm(`${id}번 째 일기를 수정하시겠습니까?`)) {
