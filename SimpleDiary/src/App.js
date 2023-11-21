@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import "./App.css";
 import DiaryEditor from "./Components/DiaryEditor";
 import DiaryList from "./Components/DiaryList";
+import LifeCycle from "./Components/LifeCycle";
 
 // const dummyList = [
 //   {
@@ -45,7 +46,6 @@ function App() {
   };
 
   const onRemove = (targetId) => {
-    console.log(`${targetId}가 삭제되었습니다.`);
     const newDiaryList = data.filter((it) => it.id !== targetId); // 타겟 아이디를 포함하지 않은 리스트로만
     setData(newDiaryList);
   };
@@ -59,6 +59,7 @@ function App() {
   };
   return (
     <div className="App">
+      <LifeCycle />
       <DiaryEditor onCreate={onCreate} />
       <DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
     </div>
