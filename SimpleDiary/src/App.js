@@ -1,38 +1,38 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 import DiaryEditor from "./Components/DiaryEditor";
 import DiaryList from "./Components/DiaryList";
-import LifeCycle from "./Components/LifeCycle";
 
-// const dummyList = [
-//   {
-//     id: 11,
-//     author: "이정환 1",
-//     content: "하이 1",
-//     emotion: 1,
-//     created_date: new Date().getTime(),
-//   },
-//   {
-//     id: 22,
-//     author: "아무개 1",
-//     content: "하이 2",
-//     emotion: 5,
-//     created_date: new Date().getTime(),
-//   },
-//   {
-//     id: 33,
-//     author: "홍길동",
-//     content: "하이 3",
-//     emotion: 4,
-//     created_date: new Date().getTime(),
-//   },
-// ];
+// https://jsonplaceholder.typicode.com/comments
 
-function App() {
-  const [data, setData] = useState([]);
+const App = () => {
+  const [data, setData] = useState([]); // 일기 데이터 저장
 
   const dataId = useRef(0);
+
+  const getData = async () => {
+    // promise를 반환하는 비동기함수
+    const res = await fetch(
+      "https://jsonplaceholder.typicode.com/comments"
+    ).then((res) => res.json());
+
+    const initData = res.slice(0, 20).map((it) => {
+      return {
+        author: it.email,
+        content: it.body,
+        emotion: Math.floor(Math.random() * 5) + 1,
+        created_date: new Date().getTime(),
+        id: dataId.current++,
+      };
+    });
+    setData(initData);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   const onCreate = (author, content, emotion) => {
+    // 일기 데이터 추가하는 함수
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -59,11 +59,10 @@ function App() {
   };
   return (
     <div className="App">
-      <LifeCycle />
       <DiaryEditor onCreate={onCreate} />
       <DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
     </div>
   );
-}
+};
 
 export default App;
