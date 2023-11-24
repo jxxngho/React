@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import "./App.css";
 import DiaryEditor from "./Components/DiaryEditor";
 import DiaryList from "./Components/DiaryList";
-import OptimizeTest from "./Components/OptimizeTest";
 
 const App = () => {
   const [data, setData] = useState([]); // 일기 데이터 저장
@@ -30,7 +29,7 @@ const App = () => {
   useEffect(() => {
     getData();
   }, []);
-  const onCreate = (author, content, emotion) => {
+  const onCreate = useCallback((author, content, emotion) => {
     // 일기 데이터 추가하는 함수
     const created_date = new Date().getTime();
     const newItem = {
@@ -41,8 +40,8 @@ const App = () => {
       id: dataId.current,
     };
     dataId.current += 1;
-    setData([newItem, ...data]);
-  };
+    setData((data) => [newItem, ...data]);
+  }, []);
 
   const onRemove = (targetId) => {
     const newDiaryList = data.filter((it) => it.id !== targetId); // 타겟 아이디를 포함하지 않은 리스트로만
@@ -70,7 +69,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <OptimizeTest />
       <DiaryEditor onCreate={onCreate} />
       <div> 전체 일기 : {data.length} </div>
       <div> 기분 좋은 일기 개수 : {goodCount}</div>

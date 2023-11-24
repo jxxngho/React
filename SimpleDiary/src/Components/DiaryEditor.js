@@ -1,6 +1,9 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const DiaryEditor = ({ onCreate }) => {
+  useEffect(() => {
+    console.log("DiaryEditor 랜더");
+  });
   const authorInput = useRef();
   const contentInput = useRef();
   // useRef   ->  요소 접근할 수 있게 해줌
@@ -91,4 +94,4 @@ const DiaryEditor = ({ onCreate }) => {
   // 일치시키면 좀 더 직관적으로 보여주기 위해서
 };
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);
