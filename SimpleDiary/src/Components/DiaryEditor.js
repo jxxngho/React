@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const DiaryEditor = ({ onCreate }) => {
-  useEffect(() => {
-    console.log("DiaryEditor 랜더");
-  });
   const authorInput = useRef();
   const contentInput = useRef();
   // useRef   ->  요소 접근할 수 있게 해줌
